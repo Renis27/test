@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8">
+  <title>Për Alesian</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: pink;
+      overflow: hidden;
+    }
+
+    #languageOverlay {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 192, 203, 0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .lang-btn {
+      padding: 15px 25px;
+      margin: 10px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: white;
+      color: black; /* Ngjyra e tekstit për dukshmëri */
+    }
+
+    .lang-btn img {
+      width: 24px;
+      height: 24px;
+    }
+
+    #contentWrapper {
+      filter: blur(8px);
+      transition: filter 0.5s ease;
+      text-align: center;
+      padding-top: 100px;
+      pointer-events: none;
+    }
+
+    #contentWrapper.active {
+      filter: none;
+      pointer-events: auto;
+    }
+
+    h1 {
+      color: white;
+      font-size: 2.5em;
+    }
+
+    input, button {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+    }
+
+    button {
+      background-color: red;
+      color: white;
+      cursor: pointer;
+    }
+
+    #mainContent {
+      display: none;
+    }
+
+    .heart {
+      font-size: 4em;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ZGJEDHJA E GJUHËS -->
+<div id="languageOverlay">
+  <button class="lang-btn" onclick="selectLanguage('sq')">
+    <img src="https://flagcdn.com/w40/al.png" alt="sq"> Shqip
+  </button>
+  <button class="lang-btn" onclick="selectLanguage('en')">
+    <img src="https://flagcdn.com/w40/gb.png" alt="en"> English
+  </button>
+  <button class="lang-btn" onclick="selectLanguage('it')">
+    <img src="https://flagcdn.com/w40/it.png" alt="it"> Italiano
+  </button>
+</div>
+
+<!-- PËRMBAJTJA KRYESORE -->
+<div id="contentWrapper">
+  <h1 id="title">❤️ Për Alesian ❤️</h1>
+  <div class="heart">💖</div>
+  <p id="askName">Shkruaj emrin e atij që e do zemrën tënde:</p>
+
+  <input type="text" id="nameInput" placeholder="My real name">
+  <button onclick="checkName()" id="continueBtn">Vazhdo</button>
+
+  <div id="mainContent">
+    <p id="nameReveal" style="font-size: 1.5em; color: white;"></p>
+    <h2 id="question">A do të bëhesh e dashura ime?</h2>
+    <button onclick="answer()" id="yesBtn1">Po 💕</button>
+    <button onclick="answer()" id="yesBtn2">Shumë Po! 😍</button>
+  </div>
+</div>
+
+<script>
+  const translations = {
+    sq: {
+      title: "❤️ Për Alesian ❤️",
+      askName: "Shkruaj emrin e atij që e do zemrën tënde:",
+      continueBtn: "Vazhdo",
+      question: "A do të bëhesh e dashura ime?",
+      yesBtn1: "Po 💕",
+      yesBtn2: "Shumë Po! 😍",
+      wrongName: "Ups! Nuk është emri i vërtetë i atij që të do 🥲",
+      success: "Ti më bëre njeriun më të lumtur në botë! 💖",
+      successName: "Emri i vërtetë është: Renis 💘"
+    },
+    en: {
+      title: "❤️ For Alesia ❤️",
+      askName: "Type the name of the one who owns your heart:",
+      continueBtn: "Continue",
+      question: "Will you be my girlfriend?",
+      yesBtn1: "Yes 💕",
+      yesBtn2: "Absolutely Yes! 😍",
+      wrongName: "Oops! That’s not the real name of the one who loves you 🥲",
+      success: "You made me the happiest person in the world! 💖",
+      successName: "The real name is: Renis 💘"
+    },
+    it: {
+      title: "❤️ Per Alesia ❤️",
+      askName: "Scrivi il nome di chi possiede il tuo cuore:",
+      continueBtn: "Continua",
+      question: "Vuoi essere la mia ragazza?",
+      yesBtn1: "Sì 💕",
+      yesBtn2: "Assolutamente sì! 😍",
+      wrongName: "Ops! Non è il vero nome di chi ti ama 🥲",
+      success: "Mi hai reso la persona più felice del mondo! 💖",
+      successName: "Il vero nome è: Renis 💘"
+    }
+  };
+
+  let currentLang = "sq";
+
+  function selectLanguage(lang) {
+    currentLang = lang;
+    document.getElementById("languageOverlay").style.display = "none";
+    document.getElementById("contentWrapper").classList.add("active");
+
+    const t = translations[lang];
+    document.getElementById("title").textContent = t.title;
+    document.getElementById("askName").textContent = t.askName;
+    document.getElementById("continueBtn").textContent = t.continueBtn;
+    document.getElementById("question").textContent = t.question;
+    document.getElementById("yesBtn1").textContent = t.yesBtn1;
+    document.getElementById("yesBtn2").textContent = t.yesBtn2;
+  }
+
+  function checkName() {
+    var input = document.getElementById("nameInput").value.toLowerCase().trim();
+    if (input === "renis") {
+      document.getElementById("mainContent").style.display = "block";
+      document.getElementById("nameReveal").textContent = translations[currentLang].successName;
+    } else {
+      alert(translations[currentLang].wrongName);
+    }
+  }
+
+  function answer() {
+    alert(translations[currentLang].success);
+  }
+</script>
+
+</body>
+</html>
