@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8">
+  <title>Për Alesian</title>
+  <style>
+    body {
+      background-color: pink;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      padding-top: 100px;
+    }
+    h1 {
+      color: white;
+      font-size: 2.5em;
+    }
+    input, button {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+    }
+    button {
+      background-color: red;
+      color: white;
+      cursor: pointer;
+    }
+    #mainContent {
+      display: none;
+    }
+    .heart {
+      font-size: 4em;
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>❤️ Për Alesian ❤️</h1>
+  <div class="heart">💖</div>
+  <p>Shkruaj emrin e atij që e do zemrën tënde:</p>
+
+  <input type="text" id="nameInput" placeholder="Emri i tij">
+  <button onclick="checkName()">Vazhdo</button>
+
+  <div id="mainContent">
+    <h2>A do të bëhesh e dashura ime?</h2>
+    <button onclick="answer()">Po 💕</button>
+    <button onclick="answer()">Shumë Po! 😍</button>
+  </div>
+
+  <script>
+    function checkName() {
+      var input = document.getElementById("nameInput").value.toLowerCase().trim();
+      if (input === "renis") { // ZËVENDËSO KËTU me emrin tënd, p.sh. "renis"
+        document.getElementById("mainContent").style.display = "block";
+      } else {
+        alert("Ups! Nuk është emri i vërtetë i atij që të do 🥲");
+      }
+    }
+
+    function answer() {
+      alert("Ti më bëre njeriun më të lumtur në botë! 💖");
+    }
+  </script>
+
+</body>
+</html>
